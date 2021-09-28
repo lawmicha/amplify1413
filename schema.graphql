@@ -1,0 +1,119 @@
+type Friend
+  @model
+  @key(name: "byUser", fields: ["userId", "username", "primaryMusicStream", "musicStreamId"])
+  @auth(
+    rules: [{ allow: owner }, { allow: private, operations: [read, delete] }]
+  ) {
+  id: ID!
+  userId: ID!
+  user: User @connection(name: "Friends")
+  username: String!
+  owner: String
+  primaryMusicStream: String
+  musicStreamId: String
+}
+
+type User
+  @model
+  @auth(
+    rules: [
+      { allow: owner }
+      { allow: private, operations: [read] }
+      { allow: private, provider: iam, operations: [read] }
+      { allow: private, provider: userPools, operations: [read] }
+    ]
+  ) {
+  id: ID!
+  username: String!
+  defaultPlaylist: String
+  # homeMenu: HomeMenu
+  isSubscribedOneSignal: String
+  owner: String
+  primaryMusicStream: String
+  publicPlaylists: AWSJSON
+  sharedPlaylists: AWSJSON
+  screenAppearance: String
+  friends: [Friend] @connection(name: "Friends")
+  mobileDefaultDestinationPlaylist: AWSJSON
+  # savedTracks: [SavedTrack] @connection(name: "SavedTracks")
+}
+
+type Friend2
+  @model
+  @key(name: "byUser", fields: ["userId", "username", "primaryMusicStream", "musicStreamId"])
+  @auth(
+    rules: [{ allow: owner }, { allow: private, operations: [read, delete] }]
+  ) {
+  id: ID!
+  userId: ID!
+  user: User2 @connection(fields: ["userId"])
+  username: String!
+  owner: String
+  primaryMusicStream: String
+  musicStreamId: String
+}
+
+type User2
+  @model
+  @auth(
+    rules: [
+      { allow: owner }
+      { allow: private, operations: [read] }
+      { allow: private, provider: iam, operations: [read] }
+      { allow: private, provider: userPools, operations: [read] }
+    ]
+  ) {
+  id: ID!
+  username: String!
+  defaultPlaylist: String
+  # homeMenu: HomeMenu
+  isSubscribedOneSignal: String
+  owner: String
+  primaryMusicStream: String
+  publicPlaylists: AWSJSON
+  sharedPlaylists: AWSJSON
+  screenAppearance: String
+  friends: [Friend2] @connection(keyName: "byUser", fields: ["id"])
+  mobileDefaultDestinationPlaylist: AWSJSON
+  # savedTracks: [SavedTrack] @connection(name: "SavedTracks")
+}
+
+type Friend3
+  @model
+  # @key(name: "byUser", fields: ["userId", "username", "primaryMusicStream", "musicStreamId"])
+  @auth(
+    rules: [{ allow: owner }, { allow: private, operations: [read, delete] }]
+  ) {
+  id: ID!
+  userId: ID!
+  user: User3 @connection(name: "Friends")
+  username: String!
+  owner: String
+  primaryMusicStream: String
+  musicStreamId: String
+}
+
+type User3
+  @model
+  @auth(
+    rules: [
+      { allow: owner }
+      { allow: private, operations: [read] }
+      { allow: private, provider: iam, operations: [read] }
+      { allow: private, provider: userPools, operations: [read] }
+    ]
+  ) {
+  id: ID!
+  username: String!
+  defaultPlaylist: String
+  # homeMenu: HomeMenu
+  isSubscribedOneSignal: String
+  owner: String
+  primaryMusicStream: String
+  publicPlaylists: AWSJSON
+  sharedPlaylists: AWSJSON
+  screenAppearance: String
+  friends: [Friend3] @connection(name: "Friends")
+  mobileDefaultDestinationPlaylist: AWSJSON
+  # savedTracks: [SavedTrack] @connection(name: "SavedTracks")
+}
